@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -16,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -24,41 +28,63 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, new homePage()).commit();
 
+
+
+
+
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod=new BottomNavigationView.OnNavigationItemSelectedListener() {
+//    public void  openUserProfile(){
+//        Intent intent = new Intent(this, UserProfile.class);
+//        startActivity(intent);
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
 
             Fragment fragment = null;
 
-                switch ((menuitem.getItemId()))
-                {
-                    case R.id.homePage:
-                        fragment = new homePage();
-                        break;
+            switch ((menuitem.getItemId())) {
+                case R.id.homePage:
+                    fragment = new homePage();
+                    break;
 
-                    case R.id.addNewAnimal:
-                        fragment = new addNewAnimal();
-                        break;
+                case R.id.addNewAnimal:
+                    fragment = new addNewAnimal();
+                    break;
 
-                    case R.id.messages:
-                        fragment = new messages();
-                        break;
+                case R.id.messages:
+                    fragment = new messages();
+                    break;
 
 
-                    case R.id.myAdvertisements:
-                        fragment = new myAdvertisements();
-                        break;
-                }
+                case R.id.myAdvertisements:
+                    fragment = new myAdvertisements();
+                    break;
+            }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, fragment).commit();
 
 
             return true;
         }
     };
-
 
 
 }
