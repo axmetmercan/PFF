@@ -57,30 +57,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPetType" />
 
-    <EditText
-        android:id="@+id/txtPetAge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Age"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPetColor" />
-
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/radioGroup2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPetAge">
+        app:layout_constraintTop_toBottomOf="@+id/txtAge">
 
         <RadioButton
             android:id="@+id/radioMale"
@@ -99,11 +85,12 @@
         android:id="@+id/idSex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:text="Sex"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/txtPetAge"
-        app:layout_constraintStart_toStartOf="@+id/txtPetAge"
-        app:layout_constraintTop_toBottomOf="@+id/txtPetAge" />
+        app:layout_constraintBottom_toBottomOf="@+id/radioGroup"
+        app:layout_constraintEnd_toStartOf="@+id/radioGroup"
+        app:layout_constraintTop_toTopOf="@+id/radioGroup" />
 
     <RadioGroup
         android:id="@+id/radioGroup2"
@@ -156,5 +143,28 @@
         android:src="@drawable/ic_exit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtOperationType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Type"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/radioGroup2"
+        app:layout_constraintEnd_toStartOf="@+id/radioGroup2"
+        app:layout_constraintTop_toTopOf="@+id/radioGroup2" />
+
+    <EditText
+        android:id="@+id/txtAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Age"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPetColor" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
