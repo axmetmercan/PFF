@@ -1,58 +1,44 @@
 package com.example.pff;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
+import android.Manifest;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link addNewAnimal#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class addNewAnimal extends Fragment {
+    ImageView petImage;
+    TextView name, sex;
+    Number age;
+    ArrayList<String> color;
+    ArrayList<String> category;
+    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public addNewAnimal() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment addNewAnimal.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static addNewAnimal newInstance(String param1, String param2) {
-        addNewAnimal fragment = new addNewAnimal();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -61,4 +47,84 @@ public class addNewAnimal extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_new_animal, container, false);
     }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        fillColor();
+        fillCategory();
+        setSpinners(view);
+
+        petImage = view.findViewById(R.id.imgPetPic);
+        petImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                try {
+                    startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                } catch (ActivityNotFoundException e) {
+                    // display error state to the user
+                    Toast.makeText(getActivity(), "Camera is Not Available", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Bitmap bp = (Bitmap) data.getExtras().get("data");
+                petImage.setImageBitmap(bp);
+            }else if (resultCode == RESULT_CANCELED)
+                Toast.makeText(getActivity(),"Cancelled", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void setSpinners(View view) {
+        Spinner colorSpinner = view.findViewById(R.id.spnColor);
+        Spinner categorySpinner = view.findViewById(R.id.spnCategory);
+
+        ArrayAdapter<String> colors = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, color);
+        colorSpinner.setAdapter(colors);
+        ArrayAdapter<String> categories = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, category);
+        categorySpinner.setAdapter(categories);
+
+    }
+
+    private void fillCategory() {
+        category = new ArrayList<>();
+        category.add("Dog");
+        category.add("Cat");
+        category.add("Horse");
+        category.add("Ferret");
+        category.add("Squirrel");
+        category.add("Rabbit");
+        category.add("Hamster");
+        category.add("Bird");
+
+    }
+
+    private void fillColor() {
+        color = new ArrayList<>();
+        color.add("White");
+        color.add("Chocolate");
+        color.add("Caramel");
+        color.add("Black");
+        color.add("Dotted");
+        color.add("Coffee");
+        color.add("Pink");
+        color.add("Orange");
+        color.add("Yellow");
+
+    }
+
+
 }

@@ -8,50 +8,44 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        Intent intent = new Intent(this, LoginSignUp.class);
+        startActivity(intent);
+
+
+
+        // Initialize Firebase Auth
+
+
+
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, new homePage()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.recyclerView, new homePage()).commit();
 
 
 
 
 
     }
-
-//    public void  openUserProfile(){
-//        Intent intent = new Intent(this, UserProfile.class);
-//        startActivity(intent);
-//    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -79,12 +73,15 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.recyclerView, fragment).commit();
 
 
             return true;
         }
     };
+
+
+
 
 
 }

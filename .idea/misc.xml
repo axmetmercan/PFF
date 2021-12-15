@@ -3,12 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/activity_login_sign_up.xml" value="0.33" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/activity_main.xml" value="0.33559782608695654" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/activity_user_profile.xml" value="0.33" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/fragment_add_new_animal.xml" value="0.33559782608695654" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/fragment_home_page.xml" value="0.33" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/fragment_messages.xml" value="0.33559782608695654" />
+        <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/row_layout.xml" value="0.31567028985507245" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/menu/bottom_menu.xml" value="0.3625" />
+        <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.21875" />
+        <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.21875" />
         <entry key="..\:/Users/DropSelf/AndroidStudioProjects/PFF/app/src/main/res/drawable/image_icon.xml" value="0.3828125" />
         <entry key="..\:/Users/DropSelf/AndroidStudioProjects/PFF/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/DropSelf/AndroidStudioProjects/PFF/app/src/main/res/layout/fragment_add_new_animal.xml" value="0.25" />

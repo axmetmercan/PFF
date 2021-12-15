@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -31,42 +32,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgPetPic" />
 
-    <EditText
-        android:id="@+id/txtPetType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Pet Type"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPetName" />
-
-    <EditText
-        android:id="@+id/txtPetColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Pet Color"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPetType" />
-
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/radioGroup2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtAge">
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone">
 
         <RadioButton
             android:id="@+id/radioMale"
@@ -131,7 +107,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="190dp" />
+        app:layout_constraintGuide_begin="166dp" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -163,8 +139,38 @@
         android:ems="10"
         android:hint="Age"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPetColor" />
+        app:layout_constraintEnd_toEndOf="@+id/spnCategory"
+        app:layout_constraintStart_toStartOf="@+id/spnCategory"
+        app:layout_constraintTop_toBottomOf="@+id/spnColor" />
+
+    <Spinner
+        android:id="@+id/spnCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/txtPetName"
+        app:layout_constraintStart_toStartOf="@+id/txtPetName"
+        app:layout_constraintTop_toBottomOf="@+id/txtPetName" />
+
+    <Spinner
+        android:id="@+id/spnColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/spnCategory"
+        app:layout_constraintStart_toStartOf="@+id/spnCategory"
+        app:layout_constraintTop_toBottomOf="@+id/spnCategory" />
+
+    <EditText
+        android:id="@+id/editTextPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Contact Number"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="@+id/txtAge"
+        app:layout_constraintStart_toStartOf="@+id/txtAge"
+        app:layout_constraintTop_toBottomOf="@+id/txtAge" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
