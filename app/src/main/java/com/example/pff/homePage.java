@@ -37,6 +37,7 @@ public class homePage extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ImageButton userButton = (ImageButton) view.findViewById(R.id.btnUser);
+        ImageButton filterButton = (ImageButton) view.findViewById(R.id.btnFilter);
 
 
         setservices(view);
@@ -49,6 +50,15 @@ public class homePage extends Fragment {
 //        petRecyclerView = new petRecyclerView(petArrayList);
 //        recyclerView.setAdapter(petRecyclerView);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), FilterActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
 
         userButton.setOnClickListener(new View.OnClickListener() {

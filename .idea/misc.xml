@@ -3,12 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/activity_filter.xml" value="0.2916666666666667" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/activity_login_sign_up.xml" value="0.33" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/activity_main.xml" value="0.33559782608695654" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/activity_user_profile.xml" value="0.33" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/fragment_add_new_animal.xml" value="0.33559782608695654" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/fragment_home_page.xml" value="0.33" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/fragment_messages.xml" value="0.33559782608695654" />
+        <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/fragment_my_advertisements.xml" value="0.3964102564102564" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/messages_row_layout.xml" value="0.25" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/published_advertisement_row_layout.xml" value="0.40260416666666665" />
         <entry key="..\:/Users/AhmetM/AndroidStudioProjects/PFF/app/src/main/res/layout/row_layout.xml" value="0.31567028985507245" />
