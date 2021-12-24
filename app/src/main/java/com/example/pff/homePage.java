@@ -51,9 +51,6 @@ public class homePage extends Fragment {
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-
-
-
         userButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,25 +63,17 @@ public class homePage extends Fragment {
     }
 
     private void fillthearray() {
-            petArrayList.add(new Pet("Ali", "pink", "Dog",2,"female"));
-            petArrayList.add(new Pet("Ali", "pink", "Dog",2,"female"));
-            petArrayList.add(new Pet("Ali", "pink", "Dog",2,"female"));
-            petArrayList.add(new Pet("Ali", "pink", "Dog",2,"female"));
-            petArrayList.add(new Pet("Ali", "pink", "Dog",2,"female"));
-            petArrayList.add(new Pet("Ali", "pink", "Dog",2,"female"));
-            petArrayList.add(new Pet("Ali", "pink", "Dog",2,"female"));
-            petArrayList.add(new Pet("Ali", "pink", "Dog",2,"female"));
-            petArrayList.add(new Pet("Ali", "pink", "Dog",2,"female"));
-            petArrayList.add(new Pet("Ali", "pink", "Dog",2,"female"));
 
+        for (int i = 0; i<999999; i++){
+            petArrayList.add(new Pet("Ali", "pink", "Dog", 2, "female"));
 
+        }
 
     }
 
     private void setservices(View view) {
         recyclerView = view.findViewById(R.id.recyleView1);
         petArrayList = new ArrayList<>();
-
         petRecyclerView = new petRecyclerView(petArrayList);
         recyclerView.setAdapter(petRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

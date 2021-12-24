@@ -115,7 +115,6 @@ public class LoginSignUp extends AppCompatActivity {
                             }
                         });
 
-
             }
 
             private void updateUI(FirebaseUser user) {
@@ -126,36 +125,4 @@ public class LoginSignUp extends AppCompatActivity {
 
     }
 
-
-    private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
-
-            Fragment fragment = null;
-
-            switch ((menuitem.getItemId())) {
-                case R.id.homePage:
-                    fragment = new homePage();
-                    break;
-
-                case R.id.addNewAnimal:
-                    fragment = new addNewAnimal();
-                    break;
-
-                case R.id.messages:
-                    fragment = new messages();
-                    break;
-
-
-                case R.id.myAdvertisements:
-                    fragment = new myAdvertisements();
-                    break;
-            }
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.recyclerView, fragment).commit();
-
-
-            return true;
-        }
-    };
 }
