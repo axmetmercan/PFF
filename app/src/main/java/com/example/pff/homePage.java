@@ -14,14 +14,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class homePage extends Fragment {
 
     private ArrayList<Pet> petArrayList;
     private RecyclerView recyclerView;
     private petRecyclerView petRecyclerView;
+
+    private FirebaseAuth auth;
+    private FirebaseFirestore firebaseFirestore;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,8 +52,12 @@ public class homePage extends Fragment {
         ImageButton filterButton = (ImageButton) view.findViewById(R.id.btnFilter);
 
 
+        auth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+
         setservices(view);
-        fillthearray();
+        getData();
         petRecyclerView.notifyDataSetChanged();
 
 //
@@ -60,7 +76,6 @@ public class homePage extends Fragment {
         });
 
 
-
         userButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,14 +87,40 @@ public class homePage extends Fragment {
 
     }
 
-    private void fillthearray() {
+    private void getData() {
+        firebaseFirestore.collection("Pets").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
 
-        for (int i = 0; i<999999; i++){
-            petArrayList.add(new Pet("Ali", "pink", "Dog", 2, "female"));
+                if (value != null) {
+                    for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
+                        Map<String, Object> data = documentSnapshot.getData();
 
-        }
+
+                        String petImageUrl = (String) data.get("downloadUrl");
+                        String petSex = (String) data.get("petSex");
+                        String petName = (String) data.get("petName");
+                        String petAge = (String) data.get("petAge");
+                        String petCategory = (String) data.get("petCategory");
+                        String petOwnerPhone = (String) data.get("contactNumber");
+                        String petColor = (String) data.get("petColor");
+
+                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge));
+
+                        System.out.println(petName);
+                    }
+                    petRecyclerView.notifyDataSetChanged();
+                }
+
+            }
+        });
+
 
     }
+
 
     private void setservices(View view) {
         recyclerView = view.findViewById(R.id.recyleView1);

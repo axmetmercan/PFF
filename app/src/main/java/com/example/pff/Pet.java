@@ -2,9 +2,18 @@ package com.example.pff;
 
 public class Pet {
 
-    private String name, color, Category;
-    private int age;
-    private String sex;
+    private String name, color, Category, imageUrl, sex, ownerPhone, age;
+
+    public Pet(String name, String color, String category, String imageUrl, String sex, String ownerPhone, String age) {
+        this.name = name;
+        this.color = color;
+        Category = category;
+        this.imageUrl = imageUrl;
+        this.sex = sex;
+        this.ownerPhone = ownerPhone;
+        this.age = age;
+    }
+
 
     public String getName() {
         return name;
@@ -30,12 +39,12 @@ public class Pet {
         Category = category;
     }
 
-    public int getAge() {
-        return age;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getSex() {
@@ -46,11 +55,19 @@ public class Pet {
         this.sex = sex;
     }
 
-    public Pet(String name, String color, String category, int age, String sex) {
-        this.name = name;
-        this.color = color;
-        Category = category;
+    public String getOwnerPhone() {
+        return ownerPhone;
+    }
+
+    public void setOwnerPhone(String ownerPhone) {
+        this.ownerPhone = ownerPhone;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
         this.age = age;
-        this.sex = sex;
     }
 }

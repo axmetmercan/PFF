@@ -3,10 +3,13 @@ package com.example.pff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -36,6 +39,9 @@ public class petRecyclerView extends RecyclerView.Adapter<petRecyclerView.ViewHo
         holder.age.setText("Age: "+petArrayList.get(position).getAge());
         holder.sex.setText("Sex: "+ petArrayList.get(position).getSex());
         holder.category.setText("Category: "+ petArrayList.get(position).getCategory());
+        Picasso.get().load(petArrayList.get(position).getImageUrl()).into(holder.imageView);
+        System.out.println(petArrayList.get(position).getImageUrl());
+
 
     }
 
@@ -49,6 +55,7 @@ public class petRecyclerView extends RecyclerView.Adapter<petRecyclerView.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView name, age, sex,category;
+        ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,6 +63,7 @@ public class petRecyclerView extends RecyclerView.Adapter<petRecyclerView.ViewHo
             sex = itemView.findViewById(R.id.petSex);
             age = itemView.findViewById(R.id.petAge);
             category = itemView.findViewById(R.id.petCategory);
+            imageView = itemView.findViewById(R.id.imgPet);
         }
     }
 }
