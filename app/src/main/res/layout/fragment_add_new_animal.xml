@@ -33,13 +33,13 @@
         app:layout_constraintTop_toBottomOf="@+id/imgPetPic" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/radioGroupSex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/radioGroup2"
+        app:layout_constraintBottom_toTopOf="@+id/radioGrupType"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPhone">
@@ -64,19 +64,19 @@
         android:layout_marginEnd="8dp"
         android:text="Sex"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/radioGroup"
-        app:layout_constraintEnd_toStartOf="@+id/radioGroup"
-        app:layout_constraintTop_toTopOf="@+id/radioGroup" />
+        app:layout_constraintBottom_toBottomOf="@+id/radioGroupSex"
+        app:layout_constraintEnd_toStartOf="@+id/radioGroupSex"
+        app:layout_constraintTop_toTopOf="@+id/radioGroupSex" />
 
     <RadioGroup
-        android:id="@+id/radioGroup2"
+        android:id="@+id/radioGrupType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupSex">
 
         <RadioButton
             android:id="@+id/radioGive"
@@ -127,12 +127,12 @@
         android:layout_marginEnd="8dp"
         android:text="Type"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/radioGroup2"
-        app:layout_constraintEnd_toStartOf="@+id/radioGroup2"
-        app:layout_constraintTop_toTopOf="@+id/radioGroup2" />
+        app:layout_constraintBottom_toBottomOf="@+id/radioGrupType"
+        app:layout_constraintEnd_toStartOf="@+id/radioGrupType"
+        app:layout_constraintTop_toTopOf="@+id/radioGrupType" />
 
     <EditText
-        android:id="@+id/txtAge"
+        android:id="@+id/editTxtAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -169,8 +169,8 @@
         android:ems="10"
         android:hint="Contact Number"
         android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="@+id/txtAge"
-        app:layout_constraintStart_toStartOf="@+id/txtAge"
-        app:layout_constraintTop_toBottomOf="@+id/txtAge" />
+        app:layout_constraintEnd_toEndOf="@+id/editTxtAge"
+        app:layout_constraintStart_toStartOf="@+id/editTxtAge"
+        app:layout_constraintTop_toBottomOf="@+id/editTxtAge" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
