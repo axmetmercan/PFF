@@ -2,7 +2,11 @@ package com.example.pff;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,9 +16,10 @@ import com.squareup.picasso.Picasso;
 
 public class PetDetailsActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
-    String name, category, color, age, sex, type, imgUrl;
+    String name, category, color, age, sex, type, imgUrl, phone;
     TextView tname, tcategory, tcolor, tage, tsex, ttype;
     ImageView imageView;
+    Button sendMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +27,22 @@ public class PetDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pet_details);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+
+        sendMessage = findViewById(R.id.btnContactOwner);
+        sendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Furkan Firat");
+                Intent intent = new Intent(Intent.ACTION_SENDTO,Uri.parse("smsto:"+phone));
+//                intent.setData();  // This ensures only SMS apps respond
+                intent.putExtra("sms_body", "Hello User");
+//                intent.putExtra(Intent.EXTRA_STREAM, attachment);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+
+            }
+        });
 
         getSetdata();
     }
@@ -36,6 +57,7 @@ public class PetDetailsActivity extends AppCompatActivity {
             sex = bundle.getString("sex");
             type = bundle.getString("type");
             imgUrl = bundle.getString("imgUrl");
+            phone = bundle.getString("phone");
         }
 
         tname = findViewById(R.id.petNameDetails);

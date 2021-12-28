@@ -145,7 +145,7 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
         String userEmail = user.getEmail();
 //        System.out.println(userEmail);
 
-        firebaseFirestore.collection("Pets").whereEqualTo("usermail", userEmail).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firebaseFirestore.collection("Pets").whereEqualTo("usermail", "axmetmercan@gmail.com").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {

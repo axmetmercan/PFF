@@ -77,7 +77,7 @@ public class myAdvertisements extends Fragment {
         String userEmail = user.getEmail();
 
 
-        firebaseFirestore.collection("Pets").whereEqualTo("usermail", "axmetmercan@gmail.com").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firebaseFirestore.collection("Pets").whereEqualTo("usermail", userEmail).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
