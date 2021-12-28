@@ -28,17 +28,14 @@ public class FilterActivity extends AppCompatActivity {
         ArrayList<String> categoriesList;
 
         categoriesList = new ArrayList<>();
-        categoriesList.add("Ahmet");
-        categoriesList.add("Ahmet");
-        categoriesList.add("Ahmet");
-        categoriesList.add("Ahmet");
-        categoriesList.add("Ahmet");
-        categoriesList.add("Ahmet");
-        categoriesList.add("Ahmet");
-        categoriesList.add("Ahmet");
-        categoriesList.add("Ahmet");
-        categoriesList.add("Ahmet");
-
+        categoriesList.add("Dog");
+        categoriesList.add("Cat");
+        categoriesList.add("Horse");
+        categoriesList.add("Ferret");
+        categoriesList.add("Squirrel");
+        categoriesList.add("Rabbit");
+        categoriesList.add("Hamster");
+        categoriesList.add("Bird");
 
         ArrayAdapter adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, categoriesList);

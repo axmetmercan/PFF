@@ -137,8 +137,9 @@ public class homePage extends Fragment {
                         String petCategory = (String) data.get("petCategory");
                         String petOwnerPhone = (String) data.get("contactNumber");
                         String petColor = (String) data.get("petColor");
+                        String petType = (String) data.get("petType");
 
-                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge));
+                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType));
 
                         System.out.println(petName);
                     }
@@ -170,8 +171,10 @@ public class homePage extends Fragment {
                         String petCategory = (String) data.get("petCategory");
                         String petOwnerPhone = (String) data.get("contactNumber");
                         String petColor = (String) data.get("petColor");
+                        String petType = (String) data.get("petType");
 
-                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge));
+
+                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType));
 
                         System.out.println(petName);
                     }
@@ -206,8 +209,10 @@ public class homePage extends Fragment {
                         String petCategory = (String) data.get("petCategory");
                         String petOwnerPhone = (String) data.get("contactNumber");
                         String petColor = (String) data.get("petColor");
+                        String petType = (String) data.get("petType");
 
-                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge));
+
+                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType));
 
                         System.out.println(petName);
                     }

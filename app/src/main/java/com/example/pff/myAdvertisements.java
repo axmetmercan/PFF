@@ -11,12 +11,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class myAdvertisements extends Fragment {
-
+    private FirebaseAuth auth;
+    private FirebaseFirestore firebaseFirestore;
     private ArrayList<PublishedAdvertisements> publishedAdvertisementsArrayList;
     private RecyclerView recyclerView;
     private publishedAdvertismentsRecyclerView publishedAdvertismentsRecyclerView;
@@ -42,9 +53,11 @@ public class myAdvertisements extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        auth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         setServices(view);
-        filltheArray();
+        getPublishedAnimals();
     }
 
     private void setServices(View view) {
@@ -58,9 +71,45 @@ public class myAdvertisements extends Fragment {
 
     private void filltheArray() {
 
-        for (int i = 0; i<20; i++){
-            publishedAdvertisementsArrayList.add(new PublishedAdvertisements("Cakil","Dog"));
-        }
+
+    }
+
+
+
+    private void getPublishedAnimals() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userEmail = user.getEmail();
+        System.out.println(userEmail);
+
+        firebaseFirestore.collection("Pets").whereEqualTo("usermail", "axmetmercan@gmail.com").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                if (value != null) {
+                    for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
+                        Map<String, Object> data = documentSnapshot.getData();
+
+
+                        String petImageUrl = (String) data.get("downloadUrl");
+                        String petSex = (String) data.get("petSex");
+                        String petName = (String) data.get("petName");
+                        String petAge = (String) data.get("petAge");
+                        String petCategory = (String) data.get("petCategory");
+                        String petOwnerPhone = (String) data.get("contactNumber");
+                        String petColor = (String) data.get("petColor");
+
+                        publishedAdvertisementsArrayList.add(new PublishedAdvertisements(petName, petCategory,petImageUrl));
+
+
+                    }
+                    publishedAdvertismentsRecyclerView.notifyDataSetChanged();
+                }
+
+            }
+        });
 
     }
 }

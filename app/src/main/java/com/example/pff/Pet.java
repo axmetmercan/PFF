@@ -2,16 +2,17 @@ package com.example.pff;
 
 public class Pet {
 
-    private String name, color, Category, imageUrl, sex, ownerPhone, age;
+    private String name, color, category, imageUrl, sex, ownerPhone, age, type;
 
-    public Pet(String name, String color, String category, String imageUrl, String sex, String ownerPhone, String age) {
+    public Pet(String name, String color, String category, String imageUrl, String sex, String ownerPhone, String age, String type) {
         this.name = name;
         this.color = color;
-        Category = category;
+        this.category = category;
         this.imageUrl = imageUrl;
         this.sex = sex;
         this.ownerPhone = ownerPhone;
         this.age = age;
+        this.type = type;
     }
 
 
@@ -32,11 +33,11 @@ public class Pet {
     }
 
     public String getCategory() {
-        return Category;
+        return category;
     }
 
     public void setCategory(String category) {
-        Category = category;
+        this.category = category;
     }
 
     public String getImageUrl() {
@@ -69,5 +70,13 @@ public class Pet {
 
     public void setAge(String age) {
         this.age = age;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

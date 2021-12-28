@@ -1,13 +1,13 @@
 package com.example.pff;
 
 public class PublishedAdvertisements {
-    String petName, petCategory;
+    String petName, petCategory, imgUrl;
 
-    public PublishedAdvertisements(String petName, String petCategory) {
+    public PublishedAdvertisements(String petName, String petCategory, String imgUrl) {
         this.petName = petName;
         this.petCategory = petCategory;
+        this.imgUrl = imgUrl;
     }
-
 
     public String getPetName() {
         return petName;
@@ -23,5 +23,13 @@ public class PublishedAdvertisements {
 
     public void setPetCategory(String petCategory) {
         this.petCategory = petCategory;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }
