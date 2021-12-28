@@ -56,6 +56,8 @@ public class myAdvertisements extends Fragment {
         auth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+
+
         setServices(view);
         getPublishedAnimals();
     }
@@ -69,17 +71,11 @@ public class myAdvertisements extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    private void filltheArray() {
-
-
-    }
-
-
 
     private void getPublishedAnimals() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userEmail = user.getEmail();
-        System.out.println(userEmail);
+
 
         firebaseFirestore.collection("Pets").whereEqualTo("usermail", "axmetmercan@gmail.com").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -102,8 +98,6 @@ public class myAdvertisements extends Fragment {
                         String petColor = (String) data.get("petColor");
 
                         publishedAdvertisementsArrayList.add(new PublishedAdvertisements(petName, petCategory,petImageUrl));
-
-
                     }
                     publishedAdvertismentsRecyclerView.notifyDataSetChanged();
                 }
