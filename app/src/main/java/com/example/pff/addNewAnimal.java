@@ -33,6 +33,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -214,6 +215,7 @@ public class addNewAnimal extends Fragment {
                             postPet.put("type", type);
                             postPet.put("petCategory", petCategory);
                             postPet.put("petColor", petColor);
+                            postPet.put("date", FieldValue.serverTimestamp());
 
                             firebaseFirestore.collection("Pets").add(postPet).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override

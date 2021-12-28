@@ -1,5 +1,7 @@
 package com.example.pff;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,6 @@ public class petRecyclerView extends RecyclerView.Adapter<petRecyclerView.ViewHo
         holder.sex.setText("Sex: "+ petArrayList.get(position).getSex());
         holder.category.setText("Category: "+ petArrayList.get(position).getCategory());
         Picasso.get().load(petArrayList.get(position).getImageUrl()).into(holder.imageView);
-        System.out.println(petArrayList.get(position).getImageUrl());
 
 
     }
@@ -56,6 +57,7 @@ public class petRecyclerView extends RecyclerView.Adapter<petRecyclerView.ViewHo
 
         TextView name, age, sex,category;
         ImageView imageView;
+        Context context;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +66,16 @@ public class petRecyclerView extends RecyclerView.Adapter<petRecyclerView.ViewHo
             age = itemView.findViewById(R.id.petAge);
             category = itemView.findViewById(R.id.petCategory);
             imageView = itemView.findViewById(R.id.imgPet);
+            context = itemView.getContext();
+
+            itemView.findViewById(R.id.btnContact).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, PetDetailsActivity.class);
+                    context.startActivity(intent);
+
+                }
+            });
         }
     }
 }
