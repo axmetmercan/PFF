@@ -146,7 +146,7 @@ public class EditActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateData(docId);
+//                updateData(docId);
                 finish();
 
             }
