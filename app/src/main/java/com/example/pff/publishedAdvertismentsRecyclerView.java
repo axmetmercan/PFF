@@ -82,33 +82,37 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
                             System.out.println("bos döndü");
                             docId = queryDocumentSnapshots.getDocuments().get(pos).getId();
                         }
+
+                        System.out.println(docId);
+
+                        if (docId != null) {
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection("Pets").document(docId)
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                            publishedAdvertisements.clear();
+                                            getPublishedAnimals();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "Error deleting document", e);
+                                        }
+                                    });
+
+                        }
+                        notifyDataSetChanged();
+
+
                     }
                 });
 
 
-                System.out.println(docId);
 
-                if (docId != null) {
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.collection("Pets").document(docId)
-                            .delete()
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                    publishedAdvertisements.clear();
-                                    getPublishedAnimals();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "Error deleting document", e);
-                                }
-                            });
-
-                }
-                notifyDataSetChanged();
             }
 
         });
