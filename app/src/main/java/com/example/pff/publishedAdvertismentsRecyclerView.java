@@ -84,11 +84,8 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
                         }
                     }
                 });
-                try {
-                    TimeUnit.SECONDS.sleep(7);
-                }catch (Exception e){
 
-                }
+
                 System.out.println(docId);
 
                 if (docId != null) {
@@ -99,6 +96,8 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                    publishedAdvertisements.clear();
+                                    getPublishedAnimals();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -143,9 +142,9 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
     private void getPublishedAnimals() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userEmail = user.getEmail();
-//        System.out.println(userEmail);
 
-        firebaseFirestore.collection("Pets").whereEqualTo("usermail", "axmetmercan@gmail.com").addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+        firebaseFirestore.collection("Pets").whereEqualTo("usermail", userEmail).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
@@ -165,12 +164,9 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
                         String petOwnerPhone = (String) data.get("contactNumber");
                         String petColor = (String) data.get("petColor");
 
-                        publishedAdvertisementsArrayList.add(new PublishedAdvertisements(petName, petCategory, petImageUrl));
-
-
+                        publishedAdvertisements.add(new PublishedAdvertisements(petName, petCategory,petImageUrl));
                     }
-//                    publishedAdvertismentsRecyclerView.notifyDataSetChanged();
-
+                    notifyDataSetChanged();
                 }
 
             }

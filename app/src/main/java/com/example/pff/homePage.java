@@ -1,5 +1,6 @@
 package com.example.pff;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -36,7 +37,7 @@ public class homePage extends Fragment {
     private FirebaseAuth auth;
     private FirebaseFirestore firebaseFirestore;
     private Button buttonAll, buttonAdapt, buttonGive;
-
+    private String categoryName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +47,19 @@ public class homePage extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK){
+            categoryName=data.getStringExtra("result");
+            petArrayList.clear();
+            getDataCategory();
+            System.out.println(categoryName);
+        }
+
     }
 
     @Override
@@ -99,10 +113,13 @@ public class homePage extends Fragment {
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int RESULT = 1;
                 Intent intent = new Intent(getActivity(), FilterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, RESULT);
             }
         });
+
+
 
 
         userButton.setOnClickListener(new View.OnClickListener() {
@@ -191,6 +208,44 @@ public class homePage extends Fragment {
     private void getDataAdapt() {
 
         firebaseFirestore.collection("Pets").whereEqualTo("type", "Adapt").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                if (value != null) {
+                    for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
+                        Map<String, Object> data = documentSnapshot.getData();
+
+
+                        String petImageUrl = (String) data.get("downloadUrl");
+                        String petSex = (String) data.get("petSex");
+                        String petName = (String) data.get("petName");
+                        String petAge = (String) data.get("petAge");
+                        String petCategory = (String) data.get("petCategory");
+                        String petOwnerPhone = (String) data.get("contactNumber");
+                        String petColor = (String) data.get("petColor");
+                        String petType = (String) data.get("type");
+
+
+                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType));
+
+                        System.out.println(petName);
+                    }
+                    petRecyclerView.notifyDataSetChanged();
+                }
+
+            }
+        });
+
+
+    }
+
+
+    private void getDataCategory() {
+
+        firebaseFirestore.collection("Pets").whereEqualTo("petCategory", categoryName).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {

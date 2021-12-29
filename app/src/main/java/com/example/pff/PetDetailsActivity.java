@@ -35,7 +35,7 @@ public class PetDetailsActivity extends AppCompatActivity {
                 System.out.println("Furkan Firat");
                 Intent intent = new Intent(Intent.ACTION_SENDTO,Uri.parse("smsto:"+phone));
 //                intent.setData();  // This ensures only SMS apps respond
-                intent.putExtra("sms_body", "Hello User");
+                intent.putExtra("sms_body", "Hello, i am interested in your pet.");
 //                intent.putExtra(Intent.EXTRA_STREAM, attachment);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);

@@ -2,6 +2,8 @@ package com.example.pff;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,6 +50,11 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(FilterActivity.this, "Current Category is "+categoriesList.get(i), Toast.LENGTH_LONG).show();
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result", categoriesList.get(i));
+                setResult(Activity.RESULT_OK,returnIntent);
+
+                finish();
             }
         });
 
