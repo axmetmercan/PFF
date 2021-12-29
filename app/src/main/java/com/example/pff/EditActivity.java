@@ -230,12 +230,12 @@ public class EditActivity extends AppCompatActivity {
         postPet.put("username", user.getDisplayName());
 //        postPet.put("userPhotoUrl", user.getPhotoUrl());
         postPet.put("petName", name.getText().toString());
-        postPet.put("petSex", "Male");
+        postPet.put("petSex", sexType);
         postPet.put("petAge", age.getText().toString());
         postPet.put("contactNumber", phone.getText().toString());
-        postPet.put("type", "Give");
-        postPet.put("petCategory", "Dog");
-        postPet.put("petColor", "White");
+        postPet.put("type", petType1);
+        postPet.put("petCategory", petCategory);
+        postPet.put("petColor", petColor);
         postPet.put("date", FieldValue.serverTimestamp());
 
         db.collection("Pets").document(doc).update(postPet);
