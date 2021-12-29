@@ -146,7 +146,7 @@ public class EditActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                updateData(docId);
+                updateData(docId);
                 finish();
 
             }
@@ -220,13 +220,25 @@ public class EditActivity extends AppCompatActivity {
     }
 
     public void updateData(String doc) {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        Pet pet = new Pet(name.toString(), color.toString(), category.toString(), "asdasdasda", sexType, phone.toString(), age.toString(), petType1);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Pet pet = new Pet(name.toString(), color.toString(), category.toString(), "asdasdasda", sexType, phone.toString(), age.toString(), petType1);
 
+        HashMap<String, Object> postPet = new HashMap<>();
+        postPet.put("downloadUrl", "1232425");
+        postPet.put("usermail",user.getEmail());
+        postPet.put("username", user.getDisplayName());
+//        postPet.put("userPhotoUrl", user.getPhotoUrl());
+        postPet.put("petName", name.getText().toString());
+        postPet.put("petSex", "Male");
+        postPet.put("petAge", age.getText().toString());
+        postPet.put("contactNumber", phone.getText().toString());
+        postPet.put("type", "Give");
+        postPet.put("petCategory", "Dog");
+        postPet.put("petColor", "White");
+        postPet.put("date", FieldValue.serverTimestamp());
 
-
-//        db.collection("Pets").document(doc).set();
+        db.collection("Pets").document(doc).update(postPet);
     }
 
 
