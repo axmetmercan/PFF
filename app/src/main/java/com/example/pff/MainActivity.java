@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //        Intent intent = new Intent(this, LoginSignUp.class);
 //        startActivity(intent);
-
+//
 
 
         // Initialize Firebase Auth

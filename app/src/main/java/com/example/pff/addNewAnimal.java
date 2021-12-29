@@ -90,8 +90,10 @@ public class addNewAnimal extends Fragment {
         fillCategory();
 
 //Set Spinners
+
+
+
         Spinner colorSpinner = view.findViewById(R.id.spnColor);
-        Spinner categorySpinner = view.findViewById(R.id.spnCategory);
 
         ArrayAdapter<String> colors = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, color);
         colorSpinner.setAdapter(colors);
@@ -111,6 +113,10 @@ public class addNewAnimal extends Fragment {
                 //return;
             }
         });
+
+
+
+        Spinner categorySpinner = view.findViewById(R.id.spnCategory);
         ArrayAdapter<String> categories = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, category);
         categorySpinner.setAdapter(categories);
 

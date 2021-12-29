@@ -4,6 +4,8 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +42,7 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
     private FirebaseFirestore firebaseFirestore;
     String docId;
     String imgUrl;
-    int pos;
+    String willEditeDocId;
 
     public publishedAdvertismentsRecyclerView(ArrayList<PublishedAdvertisements> publishedAdvertisements) {
         this.publishedAdvertisements = publishedAdvertisements;
@@ -66,10 +68,41 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
     @Override
     public void onBindViewHolder(@NonNull AdvertisementHolder holder, int position) {
         imgUrl = publishedAdvertisements.get(position).getImgUrl();
-
         holder.petName.setText(publishedAdvertisements.get(position).getPetName());
         holder.petCategory.setText(publishedAdvertisements.get(position).getPetCategory());
         Picasso.get().load(publishedAdvertisements.get(position).getImgUrl()).into(holder.petImage);
+
+
+        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                firebaseFirestore = FirebaseFirestore.getInstance();
+
+                firebaseFirestore.collection("Pets").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
+
+                        willEditeDocId = queryDocumentSnapshots.getDocuments().get(position).getId();
+                        Intent intent = new Intent(holder.context, EditActivity.class);
+                        intent.putExtra("docId", willEditeDocId);
+                        holder.context.startActivity(intent);
+
+
+
+                    }
+                });
+
+
+
+            }
+        });
+
+
+
+
+
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,11 +112,8 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
                     @Override
                     public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
                         if (!queryDocumentSnapshots.isEmpty()) {
-                            System.out.println("bos döndü");
-                            docId = queryDocumentSnapshots.getDocuments().get(pos).getId();
+                            docId = queryDocumentSnapshots.getDocuments().get(position).getId();
                         }
-
-                        System.out.println(docId);
 
                         if (docId != null) {
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -130,6 +160,7 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
         TextView petName, petCategory;
         ImageView petImage;
         Button btnDelete, btnEdit;
+        Context context;
 
         public AdvertisementHolder(@NonNull View itemView) {
             super(itemView);
@@ -138,7 +169,8 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
             petCategory = itemView.findViewById(R.id.txtPublishedPetCategory);
             petImage = itemView.findViewById(R.id.publishedPetImage);
             btnDelete = itemView.findViewById(R.id.buttonDelete);
-            btnEdit = itemView.findViewById(R.id.buttonDelete);
+            btnEdit = itemView.findViewById(R.id.buttonEdit);
+            context = itemView.getContext();
         }
     }
 
