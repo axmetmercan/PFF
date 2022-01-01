@@ -77,7 +77,7 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
             @Override
             public void onClick(View view) {
 
-
+                publishedAdvertisements.clear();
                 firebaseFirestore = FirebaseFirestore.getInstance();
 
                 firebaseFirestore.collection("Pets").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -89,9 +89,14 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
                         intent.putExtra("docId", willEditeDocId);
                         holder.context.startActivity(intent);
 
+//                        Bug Var
 
+//                        getPublishedAnimals();
+
+//                        notifyDataSetChanged();
 
                     }
+
                 });
 
 

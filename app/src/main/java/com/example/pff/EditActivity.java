@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,23 +36,29 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class EditActivity extends AppCompatActivity {
 
     Button btnSave, btnDiscard;
     String docId, petColor, petCategory, sexType, petType1;
     FirebaseFirestore firebaseFirestore;
+    StorageReference storageReference;
+    FirebaseStorage firebaseStorage;
     ArrayList<Pet> petArrayList = new ArrayList<>();
     ImageView imageView;
     TextView name, age, phone;
     RadioGroup sex, type;
-    RadioButton male, female, give, adapt;
+    RadioButton male, female, give, adapt, Sex, Type;
     Spinner colorSpinner, categorySpinner;
     Map<String, Object> map;
     ArrayList<String> color;
@@ -66,6 +73,8 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
         map = new HashMap<>();
 
         fillColor();
@@ -177,7 +186,6 @@ public class EditActivity extends AppCompatActivity {
         petType1 = "Give";
 
 
-
         if (petCategory != null) {
             int spinnerPos = categories.getPosition(petCategory);
             categorySpinner.setSelection(spinnerPos);
@@ -190,20 +198,17 @@ public class EditActivity extends AppCompatActivity {
         }
 
 
-        if (petSex.equals("Male")){
+        if (petSex.equals("Male")) {
             male.setChecked(true);
             sexType = "Male";
 
-        }
-        else
+        } else
             female.setChecked(true);
-        if (petType.equals("Adapt")){
+        if (petType.equals("Adapt")) {
             adapt.setChecked(true);
             petType1 = "Adapt";
 
-        }
-
-        else
+        } else
             give.setChecked(true);
 
 
@@ -214,7 +219,6 @@ public class EditActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             docId = bundle.getString("docId");
-            System.out.println("Doc id: " + docId);
 
         }
     }
@@ -222,23 +226,71 @@ public class EditActivity extends AppCompatActivity {
     public void updateData(String doc) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Pet pet = new Pet(name.toString(), color.toString(), category.toString(), "asdasdasda", sexType, phone.toString(), age.toString(), petType1);
 
-        HashMap<String, Object> postPet = new HashMap<>();
-        postPet.put("downloadUrl", "1232425");
-        postPet.put("usermail",user.getEmail());
-        postPet.put("username", user.getDisplayName());
+
+        int radioIdSex = sex.getCheckedRadioButtonId();
+        int radioIdType = type.getCheckedRadioButtonId();
+        Sex = (RadioButton) sex.findViewById(radioIdSex);
+        Type = (RadioButton) type.findViewById(radioIdType);
+
+
+        System.out.println("image data" + imageData);
+        UUID uuid = UUID.randomUUID();
+        String imageName = "images/" + uuid + ".jpg";
+        if (imageData != null) {
+            storageReference.child(imageName).putFile(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                    //Download Url
+                    StorageReference newReference = firebaseStorage.getReference(imageName);
+                    newReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(@NonNull Uri uri) {
+
+
+
+
+
+                            HashMap<String, Object> postPet = new HashMap<>();
+                            postPet.put("downloadUrl", uri.toString());
+                            postPet.put("usermail", user.getEmail());
+                            postPet.put("username", user.getDisplayName());
 //        postPet.put("userPhotoUrl", user.getPhotoUrl());
-        postPet.put("petName", name.getText().toString());
-        postPet.put("petSex", sexType);
-        postPet.put("petAge", age.getText().toString());
-        postPet.put("contactNumber", phone.getText().toString());
-        postPet.put("type", petType1);
-        postPet.put("petCategory", petCategory);
-        postPet.put("petColor", petColor);
-        postPet.put("date", FieldValue.serverTimestamp());
+                            postPet.put("petName", name.getText().toString());
+                            postPet.put("petSex", Sex.getText().toString());
+                            postPet.put("petAge", age.getText().toString());
+                            postPet.put("contactNumber", phone.getText().toString());
+                            postPet.put("type", Type.getText().toString());
+                            postPet.put("petCategory", petCategory);
+                            postPet.put("petColor", petColor);
+                            postPet.put("date", FieldValue.serverTimestamp());
 
-        db.collection("Pets").document(doc).update(postPet);
+                            db.collection("Pets").document(doc).update(postPet);
+                        }
+                    });
+
+
+                }
+            });
+        }
+        else {
+
+            HashMap<String, Object> postPet = new HashMap<>();
+            postPet.put("usermail", user.getEmail());
+            postPet.put("username", user.getDisplayName());
+//        postPet.put("userPhotoUrl", user.getPhotoUrl());
+            postPet.put("petName", name.getText().toString());
+            postPet.put("petSex", Sex.getText().toString());
+            postPet.put("petAge", age.getText().toString());
+            postPet.put("contactNumber", phone.getText().toString());
+            postPet.put("type", Type.getText().toString());
+            postPet.put("petCategory", petCategory);
+            postPet.put("petColor", petColor);
+            postPet.put("date", FieldValue.serverTimestamp());
+
+            db.collection("Pets").document(doc).update(postPet);
+
+        }
     }
 
 
