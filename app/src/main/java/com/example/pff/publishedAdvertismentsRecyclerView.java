@@ -89,6 +89,7 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
                         Intent intent = new Intent(holder.context, EditActivity.class);
                         intent.putExtra("docId", willEditeDocId);
                         holder.context.startActivity(intent);
+                        System.out.println("Doc ID: "+willEditeDocId);
 
 
                         getPublishedAnimals();
