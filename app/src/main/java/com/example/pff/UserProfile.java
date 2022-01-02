@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,10 +41,48 @@ public class UserProfile extends AppCompatActivity {
         editTextname = findViewById(R.id.editName);
         editTextsurname = findViewById(R.id.editSurname);
 
+        discardChanges = findViewById(R.id.btnDiscard);
+        discardChanges.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+//        discardChanges.setClickable(false);
+        System.out.println("Name "+name.getText()+ "surname"+ surname.getText());
+
 
         name.setText(user.getDisplayName());
         surname.setText(user.getEmail());
 
+        if ((name.getText().toString().equals("Name") || name.getText() == null) || (surname.getText().toString().equals("Surname") || surname.getText() == null)){
+            discardChanges.setClickable(false);
+        }
+
+
+
+
+        Intent intent = new Intent(UserProfile.this, LoginSignUp.class);
+
+
+        deleteAccount = findViewById(R.id.btnDeleteAccount);
+        deleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth auth  = FirebaseAuth.getInstance();
+                FirebaseUser user = auth.getCurrentUser();
+
+                user.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(@NonNull Void unused) {
+                        Toast.makeText(getApplicationContext(), "User has been succesfully deleted from system", Toast.LENGTH_LONG).show();
+                        startActivity(intent);
+
+                    }
+                });
+
+            }
+        });
 
         saveChanges = findViewById(R.id.btnSaveChanges);
         saveChanges.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +126,7 @@ public class UserProfile extends AppCompatActivity {
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 auth.signOut();
                 Toast.makeText(getApplicationContext(), "User has been sign out successfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(UserProfile.this, LoginSignUp.class);
+
                 startActivity(intent);
                 finish();
             }

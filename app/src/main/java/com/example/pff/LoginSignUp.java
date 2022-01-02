@@ -113,7 +113,12 @@ public class LoginSignUp extends AppCompatActivity {
                                     Log.d(TAG, "signInWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     updateUI(user);
-                                    System.out.println("Bitti");
+
+
+                                    if (user.getDisplayName() == null || user.getDisplayName().equals("")){
+                                        Intent intent1 = new Intent(LoginSignUp.this, UserProfile.class);
+                                        startActivity(intent1);
+                                    }
                                     finish();
                                 } else {
                                     // If sign in fails, display a message to the user.

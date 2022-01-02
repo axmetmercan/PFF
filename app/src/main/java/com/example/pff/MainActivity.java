@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.auth.User;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
@@ -32,9 +33,14 @@ public class MainActivity extends AppCompatActivity {
         if (user == null){
             Intent intent = new Intent(this, LoginSignUp.class);
             startActivity(intent);
+
+
         }
 
-
+        if (user != null && user.getDisplayName() == null || user.getDisplayName().equals("")){
+            Intent intent1 = new Intent(this, UserProfile.class);
+            startActivity(intent1);
+        }
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
