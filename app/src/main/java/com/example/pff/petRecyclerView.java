@@ -58,6 +58,7 @@ public class petRecyclerView extends RecyclerView.Adapter<petRecyclerView.ViewHo
                 intent.putExtra("color", holder.color.getText().toString());
                 intent.putExtra("imgUrl", petArrayList.get(position).getImageUrl());
                 intent.putExtra("phone", petArrayList.get(position).getOwnerPhone());
+                intent.putExtra("ownerName", petArrayList.get(position).getOwnerName());
                 holder.context.startActivity(intent);
 
             }
@@ -74,7 +75,7 @@ public class petRecyclerView extends RecyclerView.Adapter<petRecyclerView.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name, age, sex,category, type, color, phone;
+        TextView name, age, sex,category, type, color;
         ImageView imageView;
         Context context;
         Button btnContact;

@@ -155,8 +155,9 @@ public class homePage extends Fragment {
                         String petOwnerPhone = (String) data.get("contactNumber");
                         String petColor = (String) data.get("petColor");
                         String petType = (String) data.get("type");
+                        String ownerName = (String) data.get("username") ;
 
-                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType));
+                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType, ownerName));
 
                         System.out.println(petName);
                     }
@@ -189,9 +190,10 @@ public class homePage extends Fragment {
                         String petOwnerPhone = (String) data.get("contactNumber");
                         String petColor = (String) data.get("petColor");
                         String petType = (String) data.get("type");
+                        String ownerName = (String) data.get("username");
 
 
-                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType));
+                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType, ownerName));
 
                         System.out.println(petName);
                     }
@@ -227,9 +229,11 @@ public class homePage extends Fragment {
                         String petOwnerPhone = (String) data.get("contactNumber");
                         String petColor = (String) data.get("petColor");
                         String petType = (String) data.get("type");
+                        String ownerName = (String) data.get("username");
 
 
-                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType));
+
+                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType, ownerName));
 
                         System.out.println(petName);
                     }
@@ -265,9 +269,10 @@ public class homePage extends Fragment {
                         String petOwnerPhone = (String) data.get("contactNumber");
                         String petColor = (String) data.get("petColor");
                         String petType = (String) data.get("type");
+                        String ownerName = (String) data.get("ownerName");
 
 
-                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType));
+                        petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType, ownerName));
 
                         System.out.println(petName);
                     }

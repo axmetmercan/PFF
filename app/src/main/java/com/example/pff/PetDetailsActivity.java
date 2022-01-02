@@ -1,5 +1,6 @@
 package com.example.pff;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,14 +10,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.resources.TextAppearance;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+
 public class PetDetailsActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
-    String name, category, color, age, sex, type, imgUrl, phone;
+    String name, category, color, age, sex, type, imgUrl, phone, ownerName;
     TextView tname, tcategory, tcolor, tage, tsex, ttype;
     ImageView imageView;
     Button sendMessage;
@@ -32,10 +40,41 @@ public class PetDetailsActivity extends AppCompatActivity {
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Furkan Firat");
+
+                HashMap<String, Object> postPet = new HashMap<>();
+                postPet.put("downloadUrl", imgUrl);
+                postPet.put("username", ownerName);
+                //postPet.put("userPhotoUrl", user.getPhotoUrl());
+                postPet.put("petName", name);
+                postPet.put("petAge", age);
+                postPet.put("contactNumber", phone);
+
+                postPet.put("date", FieldValue.serverTimestamp());
+
+                firebaseFirestore.collection("MessagedUsers").add(postPet).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(@NonNull DocumentReference documentReference) {
+
+
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+
+                    }
+                });
+
+
+
+
+
+
+
                 Intent intent = new Intent(Intent.ACTION_SENDTO,Uri.parse("smsto:"+phone));
 //                intent.setData();  // This ensures only SMS apps respond
-                intent.putExtra("sms_body", "Hello, i am interested in your pet.");
+                intent.putExtra("sms_body", "Hello "+ ownerName +", i am interested in your pet.");
 //                intent.putExtra(Intent.EXTRA_STREAM, attachment);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
@@ -58,6 +97,7 @@ public class PetDetailsActivity extends AppCompatActivity {
             type = bundle.getString("type");
             imgUrl = bundle.getString("imgUrl");
             phone = bundle.getString("phone");
+            ownerName = bundle.getString("ownerName");
         }
 
         tname = findViewById(R.id.petNameDetails);

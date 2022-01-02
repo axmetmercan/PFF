@@ -2,9 +2,9 @@ package com.example.pff;
 
 public class Pet {
 
-    private String name, color, category, imageUrl, sex, ownerPhone, age, type;
+    private String name, color, category, imageUrl, sex, ownerPhone, age, type, ownerName;
 
-    public Pet(String name, String color, String category, String imageUrl, String sex, String ownerPhone, String age, String type) {
+    public Pet(String name, String color, String category, String imageUrl, String sex, String ownerPhone, String age, String type, String ownerName) {
         this.name = name;
         this.color = color;
         this.category = category;
@@ -13,6 +13,7 @@ public class Pet {
         this.ownerPhone = ownerPhone;
         this.age = age;
         this.type = type;
+        this.ownerName = ownerName;
     }
 
 
@@ -78,5 +79,13 @@ public class Pet {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 }
