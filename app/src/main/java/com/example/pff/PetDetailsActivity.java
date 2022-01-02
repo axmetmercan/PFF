@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.resources.TextAppearance;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,6 +30,9 @@ public class PetDetailsActivity extends AppCompatActivity {
     TextView tname, tcategory, tcolor, tage, tsex, ttype;
     ImageView imageView;
     Button sendMessage;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser user = auth.getCurrentUser();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,8 @@ public class PetDetailsActivity extends AppCompatActivity {
 
                 HashMap<String, Object> postPet = new HashMap<>();
                 postPet.put("downloadUrl", imgUrl);
-                postPet.put("username", ownerName);
+                postPet.put("username", user.getDisplayName());
+                postPet.put("petOwner", ownerName);
                 //postPet.put("userPhotoUrl", user.getPhotoUrl());
                 postPet.put("petName", name);
                 postPet.put("petAge", age);
@@ -55,14 +61,14 @@ public class PetDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(@NonNull DocumentReference documentReference) {
 
-
+                        System.out.println("Gönderildi");
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
-
+                        System.out.println("Gönderilemiyor");
                     }
                 });
 

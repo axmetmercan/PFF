@@ -101,7 +101,7 @@ public class messages extends Fragment {
                         String petOwnerPhone = (String) data.get("contactNumber");
                         String petColor = (String) data.get("petColor");
                         String petType = (String) data.get("type");
-                        String ownerName = (String) data.get("username");
+                        String ownerName = (String) data.get("petOwner");
 
 
                         firebaseFirestore.collection("MessagedUsers").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

@@ -36,11 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-
-        if (user != null && user.getDisplayName() == null || user.getDisplayName().equals("")){
-            Intent intent1 = new Intent(this, UserProfile.class);
-            startActivity(intent1);
+        if (user!= null){
+            if ( user.getDisplayName() == null || user.getDisplayName().equals("")){
+                Intent intent1 = new Intent(this, UserProfile.class);
+                startActivity(intent1);
+            }
         }
+
+
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 

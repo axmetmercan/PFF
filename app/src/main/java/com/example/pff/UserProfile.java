@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +27,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 public class UserProfile extends AppCompatActivity {
     ImageView exit;
     Button saveChanges, discardChanges, deleteAccount;
-    TextView name, surname;
+    TextView name, email;
     EditText editTextname, editTextsurname;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -36,54 +37,25 @@ public class UserProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         name = findViewById(R.id.txtName);
-        surname = findViewById(R.id.txtSurname);
+        email = findViewById(R.id.txtSurname);
 
         editTextname = findViewById(R.id.editName);
         editTextsurname = findViewById(R.id.editSurname);
 
+        name.setText(user.getDisplayName());
+        email.setText(user.getEmail());
+
+        deleteAccount = findViewById(R.id.btnDeleteAccount);
+
         discardChanges = findViewById(R.id.btnDiscard);
+        CheckerThread t1 = new CheckerThread(editTextname, editTextsurname);
+        t1.start();
         discardChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-//        discardChanges.setClickable(false);
-        System.out.println("Name "+name.getText()+ "surname"+ surname.getText());
-
-
-        name.setText(user.getDisplayName());
-        surname.setText(user.getEmail());
-
-        if ((name.getText().toString().equals("Name") || name.getText() == null) || (surname.getText().toString().equals("Surname") || surname.getText() == null)){
-            discardChanges.setClickable(false);
-        }
-
-
-
-
-        Intent intent = new Intent(UserProfile.this, LoginSignUp.class);
-
-
-        deleteAccount = findViewById(R.id.btnDeleteAccount);
-        deleteAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth auth  = FirebaseAuth.getInstance();
-                FirebaseUser user = auth.getCurrentUser();
-
-                user.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(@NonNull Void unused) {
-                        Toast.makeText(getApplicationContext(), "User has been succesfully deleted from system", Toast.LENGTH_LONG).show();
-                        startActivity(intent);
-
-                    }
-                });
-
-            }
-        });
-
         saveChanges = findViewById(R.id.btnSaveChanges);
         saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +71,7 @@ public class UserProfile extends AppCompatActivity {
                             .build();
 
                     name.setText(user.getDisplayName());
-                    surname.setText(user.getEmail());
+                    email.setText(user.getEmail());
 
 
                     user.updateProfile(profileUpdates)
@@ -111,9 +83,49 @@ public class UserProfile extends AppCompatActivity {
                                     }
                                 }
                             });
+
                     finish();
 
                 }
+
+            }
+        });
+
+
+//        name.setText(user.getDisplayName());
+//        surname.setText(user.getEmail());
+
+        System.out.println("Name: " + name.getText() + "Surname: " + email.getText());
+
+        if ((name.getText().toString().equals("") || name.getText() == null) || (email.getText().toString().equals("") || email.getText() == null)) {
+            discardChanges.setClickable(false);
+        }
+
+
+//        if (editTextname.getText().toString().equals("") || editTextsurname.getText().toString().equals("")){
+//            System.out.println("Hello world");
+//            saveChanges.setClickable(false);
+//        }
+//        else saveChanges.setClickable(true);
+
+
+        Intent intent = new Intent(UserProfile.this, LoginSignUp.class);
+
+
+        deleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                FirebaseUser user = auth.getCurrentUser();
+
+                user.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(@NonNull Void unused) {
+                        Toast.makeText(getApplicationContext(), "User has been succesfully deleted from system", Toast.LENGTH_LONG).show();
+                        startActivity(intent);
+
+                    }
+                });
 
             }
         });
@@ -133,7 +145,34 @@ public class UserProfile extends AppCompatActivity {
         });
 
 
+    }
 
+
+    //Thread
+    private void startThread() {
+
+    }
+
+
+    class CheckerThread extends Thread {
+        EditText name, surname;
+
+        CheckerThread(EditText name, EditText surname) {
+            this.name = name;
+            this.surname = surname;
+        }
+
+        @Override
+        public void run() {
+            while (name.getText().toString().length() < 3 || surname.getText().toString().length() < 3) {
+                saveChanges.setClickable(false);
+                saveChanges.setBackgroundColor(Color.RED);
+                System.out.println("thread");
+            }
+            saveChanges.setClickable(true);
+            saveChanges.setBackgroundColor(Color.GREEN);
+            return;
+        }
     }
 }
 
