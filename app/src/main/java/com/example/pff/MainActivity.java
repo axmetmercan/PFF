@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
@@ -25,14 +26,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//
-//        Intent intent = new Intent(this, LoginSignUp.class);
-//        startActivity(intent);
-//
+        FirebaseAuth  auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
 
-
-        // Initialize Firebase Auth
-
+        if (user == null){
+            Intent intent = new Intent(this, LoginSignUp.class);
+            startActivity(intent);
+        }
 
 
 

@@ -108,13 +108,13 @@
         android:backgroundTint="#F44336"
         android:text="Delete Account"
         app:layout_constraintBottom_toTopOf="@+id/btnSaveChanges"
-        app:layout_constraintEnd_toStartOf="@id/btnDiscardChanges"
+        app:layout_constraintEnd_toStartOf="@id/btnDiscard"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnDiscardChanges"
+        android:id="@+id/btnDiscard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#646464"

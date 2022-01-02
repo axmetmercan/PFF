@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,7 +24,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class UserProfile extends AppCompatActivity {
     ImageView exit;
-    Button saveChanges;
+    Button saveChanges, discardChanges, deleteAccount;
     TextView name, surname;
     EditText editTextname, editTextsurname;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -82,9 +84,16 @@ public class UserProfile extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                auth.signOut();
+                Toast.makeText(getApplicationContext(), "User has been sign out successfully", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(UserProfile.this, LoginSignUp.class);
+                startActivity(intent);
                 finish();
             }
         });
+
+
 
     }
 }

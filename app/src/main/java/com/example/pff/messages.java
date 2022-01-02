@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 
 public class messages extends Fragment {
@@ -78,11 +80,12 @@ public class messages extends Fragment {
 
     private void getData() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        firebaseFirestore.collection("MessagedUsers").whereEqualTo("username", user.getDisplayName()).orderBy("date", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firebaseFirestore.collection("MessagedUsers").whereEqualTo("username", user.getDisplayName()).orderBy("date", Query.Direction.DESCENDING).limit(10).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
-                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//                    System.out.println(error.getLocalizedMessage());
                 }
 
                 if (value != null) {
@@ -104,8 +107,6 @@ public class messages extends Fragment {
                         firebaseFirestore.collection("MessagedUsers").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
                             public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
-
-
 
                             }
 
