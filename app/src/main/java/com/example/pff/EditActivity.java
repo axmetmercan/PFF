@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -156,8 +157,9 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateData(docId);
-                finish();
 
+
+                finish();
             }
         });
 

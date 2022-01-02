@@ -2,7 +2,6 @@ package com.example.pff;
 
 import static android.content.ContentValues.TAG;
 
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -89,13 +90,9 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
                         intent.putExtra("docId", willEditeDocId);
                         holder.context.startActivity(intent);
 
-//                        Bug Var
 
-//                        getPublishedAnimals();
-                        publishedAdvertisements.clear();
+                        getPublishedAnimals();
                         notifyDataSetChanged();
-
-//                        notifyDataSetChanged();
 
                     }
 
@@ -195,6 +192,7 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
                 }
 
                 if (value != null) {
+                    publishedAdvertisements.clear();
                     for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
                         Map<String, Object> data = documentSnapshot.getData();
 

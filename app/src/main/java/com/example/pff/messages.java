@@ -1,5 +1,6 @@
 package com.example.pff;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -73,7 +77,8 @@ public class messages extends Fragment {
 
 
     private void getData() {
-        firebaseFirestore.collection("MessagedUsers").orderBy("date", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseFirestore.collection("MessagedUsers").whereEqualTo("username", user.getDisplayName()).orderBy("date", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
@@ -94,6 +99,17 @@ public class messages extends Fragment {
                         String petColor = (String) data.get("petColor");
                         String petType = (String) data.get("type");
                         String ownerName = (String) data.get("username");
+
+
+                        firebaseFirestore.collection("MessagedUsers").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
+
+
+
+                            }
+
+                        });
 
 
                         messageArrayList.add(new Message("Owner: " + ownerName, "Pet: " + petName, petImageUrl, petOwnerPhone));
