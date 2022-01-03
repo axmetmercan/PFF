@@ -23,6 +23,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class homePage extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private Button buttonAll, buttonAdapt, buttonGive;
     private String categoryName;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +59,7 @@ public class homePage extends Fragment {
             categoryName=data.getStringExtra("result");
             petArrayList.clear();
             getDataCategory();
-            System.out.println(categoryName);
+
         }
 
     }
@@ -135,11 +137,11 @@ public class homePage extends Fragment {
 
     private void getDataGive() {
 
-        firebaseFirestore.collection("Pets").whereEqualTo("type", "Give").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firebaseFirestore.collection("Pets").whereEqualTo("type", "Give").orderBy("date", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
-                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
 
                 if (value != null) {
@@ -159,7 +161,7 @@ public class homePage extends Fragment {
 
                         petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType, ownerName));
 
-                        System.out.println(petName);
+
                     }
                     petRecyclerView.notifyDataSetChanged();
                 }
@@ -170,11 +172,12 @@ public class homePage extends Fragment {
     }
 
     private void getData() {
-        firebaseFirestore.collection("Pets").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firebaseFirestore.collection("Pets").orderBy("date", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
-                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    System.out.println(error.getLocalizedMessage());
                 }
 
                 if (value != null) {
@@ -195,7 +198,7 @@ public class homePage extends Fragment {
 
                         petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType, ownerName));
 
-                        System.out.println(petName);
+
                     }
                     petRecyclerView.notifyDataSetChanged();
                 }
@@ -209,11 +212,11 @@ public class homePage extends Fragment {
 
     private void getDataAdapt() {
 
-        firebaseFirestore.collection("Pets").whereEqualTo("type", "Adapt").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firebaseFirestore.collection("Pets").whereEqualTo("type", "Adapt").orderBy("date", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
-                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
 
                 if (value != null) {
@@ -235,7 +238,6 @@ public class homePage extends Fragment {
 
                         petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType, ownerName));
 
-                        System.out.println(petName);
                     }
                     petRecyclerView.notifyDataSetChanged();
                 }
@@ -249,14 +251,16 @@ public class homePage extends Fragment {
 
     private void getDataCategory() {
 
-        firebaseFirestore.collection("Pets").whereEqualTo("petCategory", categoryName).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firebaseFirestore.collection("Pets")
+                .whereEqualTo("petCategory", categoryName).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
-                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
 
                 if (value != null) {
+                    petArrayList.clear();
                     for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
                         Map<String, Object> data = documentSnapshot.getData();
 
@@ -274,10 +278,11 @@ public class homePage extends Fragment {
 
                         petArrayList.add(new Pet(petName, petColor, petCategory, petImageUrl, petSex, petOwnerPhone, petAge, petType, ownerName));
 
-                        System.out.println(petName);
                     }
                     petRecyclerView.notifyDataSetChanged();
                 }
+
+
 
             }
         });

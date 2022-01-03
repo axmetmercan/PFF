@@ -87,6 +87,7 @@ public class myAdvertisements extends Fragment {
                 if (value != null) {
                     for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
                         Map<String, Object> data = documentSnapshot.getData();
+                        String documentId = documentSnapshot.getId();
 
 
                         String petImageUrl = (String) data.get("downloadUrl");
@@ -97,7 +98,7 @@ public class myAdvertisements extends Fragment {
                         String petOwnerPhone = (String) data.get("contactNumber");
                         String petColor = (String) data.get("petColor");
 
-                        publishedAdvertisementsArrayList.add(new PublishedAdvertisements(petName, petCategory,petImageUrl));
+                        publishedAdvertisementsArrayList.add(new PublishedAdvertisements(petName, petCategory,petImageUrl, documentId));
                     }
                     publishedAdvertismentsRecyclerView.notifyDataSetChanged();
                 }

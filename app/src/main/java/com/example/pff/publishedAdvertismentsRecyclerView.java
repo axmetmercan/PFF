@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -79,33 +80,35 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
             public void onClick(View view) {
 
 
-                firebaseFirestore = FirebaseFirestore.getInstance();
-
-                firebaseFirestore.collection("Pets").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
-
-                        willEditeDocId = queryDocumentSnapshots.getDocuments().get(position).getId();
-                        Intent intent = new Intent(holder.context, EditActivity.class);
-                        intent.putExtra("docId", willEditeDocId);
-                        holder.context.startActivity(intent);
-                        System.out.println("Doc ID: "+willEditeDocId);
+                willEditeDocId = publishedAdvertisements.get(position).getDocumentId();
+                Intent intent = new Intent(holder.context, EditActivity.class);
+                intent.putExtra("docId", willEditeDocId);
+                holder.context.startActivity(intent);
+                System.out.println("Doc ID: " + willEditeDocId);
 
 
-                        getPublishedAnimals();
-                        notifyDataSetChanged();
-
-                    }
-
-                });
-
-
+//                firebaseFirestore = FirebaseFirestore.getInstance();
+//
+//                firebaseFirestore.collection("Pets").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
+//
+//                        willEditeDocId = queryDocumentSnapshots.getDocuments().get(holder.getAdapterPosition()).getId();
+//                        Intent intent = new Intent(holder.context, EditActivity.class);
+//                        intent.putExtra("docId", willEditeDocId);
+//                        holder.context.startActivity(intent);
+//                        System.out.println("Doc ID: "+willEditeDocId);
+//
+//
+//                getPublishedAnimals();
+//                notifyDataSetChanged();
+//
+//                    }
+//
+//                });
 
             }
         });
-
-
-
 
 
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +120,7 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
                     @Override
                     public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
                         if (!queryDocumentSnapshots.isEmpty()) {
-                            docId = queryDocumentSnapshots.getDocuments().get(position).getId();
+                            docId = queryDocumentSnapshots.getDocuments().get(holder.getAdapterPosition()).getId();
                         }
 
                         if (docId != null) {
@@ -145,7 +148,6 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
 
                     }
                 });
-
 
 
             }
@@ -195,7 +197,9 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
                 if (value != null) {
                     publishedAdvertisements.clear();
                     for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
+
                         Map<String, Object> data = documentSnapshot.getData();
+                        String documentId = documentSnapshot.getId();
 
 
                         String petImageUrl = (String) data.get("downloadUrl");
@@ -206,7 +210,7 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
                         String petOwnerPhone = (String) data.get("contactNumber");
                         String petColor = (String) data.get("petColor");
 
-                        publishedAdvertisements.add(new PublishedAdvertisements(petName, petCategory,petImageUrl));
+                        publishedAdvertisements.add(new PublishedAdvertisements(petName, petCategory, petImageUrl,documentId));
                     }
                     notifyDataSetChanged();
                 }

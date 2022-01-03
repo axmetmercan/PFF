@@ -27,30 +27,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseAuth  auth = FirebaseAuth.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
 
-        if (user == null){
+        if (user == null) {
             Intent intent = new Intent(this, LoginSignUp.class);
             startActivity(intent);
 
 
         }
-        if (user!= null){
-            if ( user.getDisplayName() == null || user.getDisplayName().equals("")){
+        if (user != null) {
+            if (user.getDisplayName() == null || user.getDisplayName().equals("")) {
                 Intent intent1 = new Intent(this, UserProfile.class);
                 startActivity(intent1);
             }
         }
 
 
-
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.recyclerView, new homePage()).commit();
-
-
 
 
     }
@@ -87,9 +84,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
-
-
-
 
 
 }

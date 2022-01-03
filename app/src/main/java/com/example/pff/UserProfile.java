@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,11 +31,24 @@ public class UserProfile extends AppCompatActivity {
     TextView name, email;
     EditText editTextname, editTextsurname;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    boolean flag;
+    private Handler mainHandler = new Handler();
 
+
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(UserProfile.this, LoginSignUp.class);
+
+        super.onBackPressed();
+        startActivity(intent);
+        flag = false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        flag = true;
         setContentView(R.layout.activity_user_profile);
         name = findViewById(R.id.txtName);
         email = findViewById(R.id.txtSurname);
@@ -53,6 +67,7 @@ public class UserProfile extends AppCompatActivity {
         discardChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                flag = false;
                 finish();
             }
         });
@@ -60,7 +75,7 @@ public class UserProfile extends AppCompatActivity {
         saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                flag = false;
 
                 if (editTextname.getText().toString() != "" || editTextsurname.getText().toString() != "") {
 
@@ -122,6 +137,7 @@ public class UserProfile extends AppCompatActivity {
                     @Override
                     public void onSuccess(@NonNull Void unused) {
                         Toast.makeText(getApplicationContext(), "User has been succesfully deleted from system", Toast.LENGTH_LONG).show();
+                        flag = false;
                         startActivity(intent);
 
                     }
@@ -135,8 +151,10 @@ public class UserProfile extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                flag = false;
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 auth.signOut();
+
                 Toast.makeText(getApplicationContext(), "User has been sign out successfully", Toast.LENGTH_SHORT).show();
 
                 startActivity(intent);
@@ -145,14 +163,13 @@ public class UserProfile extends AppCompatActivity {
         });
 
 
+
+
+
     }
 
 
     //Thread
-    private void startThread() {
-
-    }
-
 
     class CheckerThread extends Thread {
         EditText name, surname;
@@ -164,14 +181,34 @@ public class UserProfile extends AppCompatActivity {
 
         @Override
         public void run() {
-            while (name.getText().toString().length() < 3 || surname.getText().toString().length() < 3) {
-                saveChanges.setClickable(false);
-                saveChanges.setBackgroundColor(Color.RED);
-                System.out.println("thread");
+            while (flag)  {
+//                saveChanges.setClickable(false);
+//                saveChanges.setBackgroundColor(Color.RED);
+//                System.out.println("thread calisiyor");
+                if ((name.getText().toString().length() >= 3 && surname.getText().toString().length() >= 3)){
+                    mainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            saveChanges.setClickable(true);
+                            saveChanges.setBackgroundColor(Color.GREEN);
+                        }
+                    });
+                    System.out.println("thread calisiyor true");
+                }
+                else if ((name.getText().toString().length() < 3 || surname.getText().toString().length() < 3)){
+                    mainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            saveChanges.setClickable(false);
+                            saveChanges.setBackgroundColor(Color.RED);
+                        }
+                    });
+
+                    System.out.println("thread calisiyor false ");
+                }
+
             }
-            saveChanges.setClickable(true);
-            saveChanges.setBackgroundColor(Color.GREEN);
-            return;
+
         }
     }
 }

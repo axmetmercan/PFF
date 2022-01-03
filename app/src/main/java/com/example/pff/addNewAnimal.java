@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,8 @@ public class addNewAnimal extends Fragment {
     RadioGroup radioGroupSex, radioGroupType;
     RadioButton radioButtonSex, radioButtonType;
     String petCategory, petColor;
+    boolean flag;
+    private Handler handler = new Handler();
 
 
     ActivityResultLauncher<Intent> activityResultLauncher;
@@ -85,12 +88,13 @@ public class addNewAnimal extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        flag = true;
+        CheckerThread runnable = new CheckerThread();
+//        new Thread(runnable).start();
         fillColor();
         fillCategory();
 
 //Set Spinners
-
 
 
         Spinner colorSpinner = view.findViewById(R.id.spnColor);
@@ -113,7 +117,6 @@ public class addNewAnimal extends Fragment {
                 //return;
             }
         });
-
 
 
         Spinner categorySpinner = view.findViewById(R.id.spnCategory);
@@ -177,6 +180,7 @@ public class addNewAnimal extends Fragment {
     private void uploadButtonClicked(View view) {
 //
 //
+        flag = false;
         int radioIdSex = radioGroupSex.getCheckedRadioButtonId();
         int radioIdType = radioGroupType.getCheckedRadioButtonId();
         radioButtonSex = (RadioButton) radioGroupSex.findViewById(radioIdSex);
@@ -211,7 +215,7 @@ public class addNewAnimal extends Fragment {
 
                             HashMap<String, Object> postPet = new HashMap<>();
                             postPet.put("downloadUrl", downloadUri);
-                            postPet.put("usermail",user.getEmail());
+                            postPet.put("usermail", user.getEmail());
                             postPet.put("username", user.getDisplayName());
                             //postPet.put("userPhotoUrl", user.getPhotoUrl());
                             postPet.put("petName", petName);
@@ -269,10 +273,6 @@ public class addNewAnimal extends Fragment {
         }
     }
 
-    private void setSpinners(View view) {
-
-
-    }
 
     private void fillCategory() {
         category = new ArrayList<>();
@@ -300,6 +300,54 @@ public class addNewAnimal extends Fragment {
         color.add("Yellow");
 
     }
+
+
+
+    class CheckerThread implements Runnable{
+
+        @Override
+        public void run() {
+            while(true){
+                try {
+                    if (age.getText().toString().length() > 2){
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                age.setText(age.getText().toString().substring(0,1));
+
+                            }
+                        });
+                    }
+                    if (name.getText().toString().length() < 3){
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                publishButton.setClickable(false);
+
+                            }
+                        });
+                    }
+                    else {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                publishButton.setClickable(true);
+
+                            }
+                        });
+                    }
+                    System.out.println("New Animal Thread Working");
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
+    }
+
+
 
 
 }
