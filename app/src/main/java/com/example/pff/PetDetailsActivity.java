@@ -82,9 +82,9 @@ public class PetDetailsActivity extends AppCompatActivity {
 //                intent.setData();  // This ensures only SMS apps respond
                 intent.putExtra("sms_body", "Hello "+ ownerName +", i am interested in your pet.");
 //                intent.putExtra(Intent.EXTRA_STREAM, attachment);
-                if (intent.resolveActivity(getPackageManager()) != null) {
+//                if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
-                }
+//                }
 
             }
         });
