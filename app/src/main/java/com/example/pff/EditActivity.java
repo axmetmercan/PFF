@@ -212,8 +212,6 @@ public class EditActivity extends AppCompatActivity {
 
         } else
             give.setChecked(true);
-
-
     }
 
     private void getDatas() {
@@ -221,8 +219,37 @@ public class EditActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             docId = bundle.getString("docId");
-
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("name", name.getText().toString());
+        outState.putString("age", age.getText().toString());
+        outState.putString("phone", phone.getText().toString());
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        String name, age, phone;
+        ImageView img;
+        name = savedInstanceState.getString("name");
+        this.name.setText(name);
+
+        age = savedInstanceState.getString("age");
+        this.age.setText(age);
+
+        phone = savedInstanceState.getString("phone");
+        this.phone.setText(phone);
+
+
+
+
+
     }
 
     public void updateData(String doc) {

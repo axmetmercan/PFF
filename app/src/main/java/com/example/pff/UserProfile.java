@@ -38,10 +38,14 @@ public class UserProfile extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(UserProfile.this, LoginSignUp.class);
-
         super.onBackPressed();
-        startActivity(intent);
+
+
+        if (user.getDisplayName() == null || user.getDisplayName().isEmpty()){
+            Intent intent = new Intent(UserProfile.this, LoginSignUp.class);
+
+            startActivity(intent);
+        }
         flag = false;
     }
 

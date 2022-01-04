@@ -80,7 +80,7 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
             public void onClick(View view) {
 
 
-                willEditeDocId = publishedAdvertisements.get(position).getDocumentId();
+                willEditeDocId = publishedAdvertisements.get(holder.getAdapterPosition()).getDocumentId();
                 Intent intent = new Intent(holder.context, EditActivity.class);
                 intent.putExtra("docId", willEditeDocId);
                 holder.context.startActivity(intent);
@@ -114,40 +114,54 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("Deleted Object List");
+                willEditeDocId = publishedAdvertisements.get(holder.getAdapterPosition()).getDocumentId();
+                System.out.println("Deleted Doc Id: " + willEditeDocId);
 
-                firebaseFirestore = FirebaseFirestore.getInstance();
-                firebaseFirestore.collection("Pets").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("Pets").document(willEditeDocId)
+                        .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            docId = queryDocumentSnapshots.getDocuments().get(holder.getAdapterPosition()).getId();
-                        }
-
-                        if (docId != null) {
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            db.collection("Pets").document(docId)
-                                    .delete()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                            publishedAdvertisements.clear();
-                                            getPublishedAnimals();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w(TAG, "Error deleting document", e);
-                                        }
-                                    });
-
-                        }
-                        notifyDataSetChanged();
-
+                    public void onSuccess(@NonNull Void unused) {
+                        System.out.println("Document Silindi");
 
                     }
                 });
+
+
+//                firebaseFirestore = FirebaseFirestore.getInstance();
+//                firebaseFirestore.collection("Pets").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
+//                        if (!queryDocumentSnapshots.isEmpty()) {
+//                            docId = queryDocumentSnapshots.getDocuments().get(holder.getAdapterPosition()).getId();
+//                        }
+//
+//                        if (docId != null) {
+//                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+//                            db.collection("Pets").document(docId)
+//                                    .delete()
+//                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                        @Override
+//                                        public void onSuccess(Void aVoid) {
+//                                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
+//                                            publishedAdvertisements.clear();
+//                                            getPublishedAnimals();
+//                                        }
+//                                    })
+//                                    .addOnFailureListener(new OnFailureListener() {
+//                                        @Override
+//                                        public void onFailure(@NonNull Exception e) {
+//                                            Log.w(TAG, "Error deleting document", e);
+//                                        }
+//                                    });
+//
+//                        }
+//                        notifyDataSetChanged();
+//
+//
+//                    }
+//                });
 
 
             }
@@ -179,45 +193,6 @@ public class publishedAdvertismentsRecyclerView extends RecyclerView.Adapter<pub
             btnEdit = itemView.findViewById(R.id.buttonEdit);
             context = itemView.getContext();
         }
-    }
-
-
-    private void getPublishedAnimals() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userEmail = user.getEmail();
-
-
-        firebaseFirestore.collection("Pets").whereEqualTo("usermail", userEmail).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-
-                }
-
-                if (value != null) {
-                    publishedAdvertisements.clear();
-                    for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
-
-                        Map<String, Object> data = documentSnapshot.getData();
-                        String documentId = documentSnapshot.getId();
-
-
-                        String petImageUrl = (String) data.get("downloadUrl");
-                        String petSex = (String) data.get("petSex");
-                        String petName = (String) data.get("petName");
-                        String petAge = (String) data.get("petAge");
-                        String petCategory = (String) data.get("petCategory");
-                        String petOwnerPhone = (String) data.get("contactNumber");
-                        String petColor = (String) data.get("petColor");
-
-                        publishedAdvertisements.add(new PublishedAdvertisements(petName, petCategory, petImageUrl,documentId));
-                    }
-                    notifyDataSetChanged();
-                }
-
-            }
-        });
-
     }
 
 

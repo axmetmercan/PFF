@@ -59,6 +59,7 @@ public class myAdvertisements extends Fragment {
 
 
         setServices(view);
+
         getPublishedAnimals();
     }
 
@@ -85,6 +86,7 @@ public class myAdvertisements extends Fragment {
                 }
 
                 if (value != null) {
+                    publishedAdvertisementsArrayList.clear();
                     for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
                         Map<String, Object> data = documentSnapshot.getData();
                         String documentId = documentSnapshot.getId();
