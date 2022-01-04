@@ -187,6 +187,9 @@ public class addNewAnimal extends Fragment {
         radioButtonType = (RadioButton) radioGroupType.findViewById(radioIdType);
         //  Toast.makeText(getActivity(), radioButtonSex.getText().toString() + radioButtonType.getText().toString(), Toast.LENGTH_SHORT).show();
 
+
+
+
         System.out.println("Burası çalıştı");
         if (imageData != null) {
             System.out.println("image data Boş Değl");
@@ -346,8 +349,5 @@ public class addNewAnimal extends Fragment {
 
         }
     }
-
-
-
 
 }

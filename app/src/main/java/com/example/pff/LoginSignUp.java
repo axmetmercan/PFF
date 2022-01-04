@@ -7,12 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,9 +34,8 @@ import org.w3c.dom.Text;
 public class LoginSignUp extends AppCompatActivity {
     private Button signUp, logIn;
     private FirebaseAuth mAuth;
+    private ImageView appLogo;
     private EditText email, pass;
-    BadgeDrawable badge;
-
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -46,10 +48,31 @@ public class LoginSignUp extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("email", email.getText().toString());
+        outState.putString("password", pass.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        String usermail = savedInstanceState.getString("email");
+        String password = savedInstanceState.getString("password");
+
+        email.setText(usermail);
+        pass.setText(password);
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_sign_up);
         mAuth = FirebaseAuth.getInstance();
+
+        appLogo = findViewById(R.id.appLogo);
 
 
         email = (EditText) findViewById(R.id.txtEmail);
@@ -112,10 +135,9 @@ public class LoginSignUp extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "signInWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    updateUI(user);
 
 
-                                    if (user.getDisplayName() == null || user.getDisplayName().equals("")){
+                                    if (user.getDisplayName() == null || user.getDisplayName().equals("")) {
                                         Intent intent1 = new Intent(LoginSignUp.this, UserProfile.class);
                                         startActivity(intent1);
                                     }
@@ -125,21 +147,17 @@ public class LoginSignUp extends AppCompatActivity {
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
                                     Toast.makeText(LoginSignUp.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
-                                    updateUI(null);
+
                                 }
                             }
                         });
 
             }
 
-            private void updateUI(FirebaseUser user) {
-
-            }
         });
 
 
-
-
     }
+
 
 }

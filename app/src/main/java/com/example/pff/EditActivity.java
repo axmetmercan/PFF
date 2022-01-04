@@ -158,8 +158,9 @@ public class EditActivity extends AppCompatActivity {
             public void onClick(View view) {
                 updateData(docId);
 
-
+                Toast.makeText(getApplicationContext(), "Please Wait Uploading", Toast.LENGTH_SHORT).show();
                 finish();
+
             }
         });
 
@@ -275,11 +276,6 @@ public class EditActivity extends AppCompatActivity {
                     newReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(@NonNull Uri uri) {
-
-
-
-
-
                             HashMap<String, Object> postPet = new HashMap<>();
                             postPet.put("downloadUrl", uri.toString());
                             postPet.put("usermail", user.getEmail());
@@ -293,8 +289,8 @@ public class EditActivity extends AppCompatActivity {
                             postPet.put("petCategory", petCategory);
                             postPet.put("petColor", petColor);
                             postPet.put("date", FieldValue.serverTimestamp());
-
                             db.collection("Pets").document(doc).update(postPet);
+
                         }
                     });
 
